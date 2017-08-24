@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "fechahora",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "pensamiento",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "post",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idpaciente",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "registro",
+    "pagination": "no",
+    "microserviceName": "msPostsHatcc",
+    "searchEngine": false
+}

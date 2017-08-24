@@ -1,0 +1,20 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "idregistro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idvalor",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "registro_valor",
+    "pagination": "no",
+    "microserviceName": "msPostsHatcc",
+    "searchEngine": false
+}

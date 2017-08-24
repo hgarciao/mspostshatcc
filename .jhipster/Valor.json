@@ -1,0 +1,24 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "detalle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "flagvacio",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "idopciones",
+            "fieldType": "String"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "valor",
+    "pagination": "no",
+    "microserviceName": "msPostsHatcc",
+    "searchEngine": false
+}
