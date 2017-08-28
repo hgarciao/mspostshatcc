@@ -52,6 +52,9 @@ public class Registro implements Serializable {
     
     @Field("fechahoraUpdate")
     private ZonedDateTime fechahoraUpdate;
+    
+    @Field("notificar")
+    private boolean notificar;
 
     
     public String getId() {
@@ -188,7 +191,16 @@ public class Registro implements Serializable {
 	public void setFechahoraUpdate(ZonedDateTime fechahoraUpdate) {
 		this.fechahoraUpdate = fechahoraUpdate;
 	}
+
+	public boolean isNotificar() {
+		return notificar;
+	}
+
+	public void setNotificar(boolean notificar) {
+		this.notificar = notificar;
+	}
     
     
+	
     
 }
