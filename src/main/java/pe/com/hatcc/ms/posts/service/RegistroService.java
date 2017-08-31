@@ -114,15 +114,16 @@ public class RegistroService {
         System.out.println("template : " + mongoTemplate);*/
     	List suscrito =  new ArrayList<String>();
     	suscrito.add(paciente);
+    	//LIMITAR A 10
     	 List<AggregationOperation> list = new ArrayList<AggregationOperation>();
     	 	list.add(Aggregation.match(Criteria.where("suscritos").all(suscrito)));
     	    list.add(Aggregation.unwind("comentarios"));
     	    list.add(Aggregation.match(Criteria.where("comentarios.paciente").ne(paciente)));
     	    list.add(Aggregation.sort(new Sort(Sort.Direction.DESC,"comentarios.paciente")));
     	    list.add(Aggregation.sort(new Sort(Sort.Direction.DESC,"comentarios.fechaHora")));
-    	    list.add(Aggregation.group("id", "pensamiento","fechahoraUpdate").push("comentarios").as("comentarios"));
-    	    list.add(Aggregation.project("id", "pensamiento", "comentarios","fechahoraUpdate"));
-    	    list.add(Aggregation.sort(new Sort(Sort.Direction.DESC,"fechahoraUpdate")));
+    	    list.add(Aggregation.group("fechahoraUpdate","pensamiento","opUpdate").push("comentarios").as("comentarios").first("id").as("post"));
+    	    list.add(Aggregation.project("pensamiento", "comentarios","fechahoraUpdate","opUpdate","post"));
+    	    list.add(Aggregation.sort(new Sort(Sort.Direction.ASC,"fechahoraUpdate")));
     	    TypedAggregation<Registro> agg = Aggregation.newAggregation(Registro.class, list);
     	    Comparator<ZonedDateTime> comparator = Comparator.comparing(
     	            zdt -> zdt.truncatedTo(ChronoUnit.MINUTES));

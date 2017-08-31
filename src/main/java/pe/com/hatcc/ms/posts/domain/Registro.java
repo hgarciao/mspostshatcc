@@ -55,7 +55,9 @@ public class Registro implements Serializable {
     
     @Field("notificar")
     private boolean notificar;
-
+    
+    @Field("opUpdate")
+    private String opUpdate;
     
     public String getId() {
         return id;
@@ -198,6 +200,14 @@ public class Registro implements Serializable {
 
 	public void setNotificar(boolean notificar) {
 		this.notificar = notificar;
+	}
+
+	public String getOpUpdate() {
+		return opUpdate;
+	}
+
+	public void setOpUpdate(String opUpdate) {
+		this.opUpdate = opUpdate;
 	}
     
     
