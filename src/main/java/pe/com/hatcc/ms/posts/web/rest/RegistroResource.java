@@ -76,6 +76,10 @@ public class RegistroResource {
 		registro.setFechahora(zonedDateTime);
 		registro.setFechahoraUpdate(zonedDateTime);
         Registro result = registroService.save(registro);
+        /*Mandar notificaciones a todos los usuarios*/
+        this.messagingTemplate.convertAndSend("/topic/registros", result);
+        /**/
+        
         return ResponseEntity.created(new URI("/api/registros/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("registro", result.getId().toString()))
             .body(result);
