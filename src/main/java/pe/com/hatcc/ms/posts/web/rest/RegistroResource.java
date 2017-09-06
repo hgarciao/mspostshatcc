@@ -31,6 +31,7 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -199,13 +200,13 @@ public class RegistroResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of registros in body
      */
-    @RequestMapping(value = "/registros/pacientes/{username}/{page}/{pagesize}",
-        method = RequestMethod.GET,
+    @RequestMapping(value = "/registros/pacientes/wall",
+        method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Registro> getAllRegistrosAccordingPaciente(@PathVariable String username,@PathVariable int page,@PathVariable int pagesize) {
+    public List<Registro> getAllRegistrosAccordingPaciente(@RequestBody Map<String, Object> parametros) {
         log.debug("REST request to get all Registros");
-        return registroService.findAllAccordingToPaciente(username,page,pagesize);
+        return registroService.findAllAccordingToPaciente(parametros);
     }
     
     /**

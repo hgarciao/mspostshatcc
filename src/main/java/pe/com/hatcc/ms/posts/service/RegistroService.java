@@ -95,9 +95,12 @@ public class RegistroService {
      *  @return the list of entities
      */
     
-    public List<Registro> findAllAccordingToPaciente(String paciente,int page,int pagesize) {
+    public List<Registro> findAllAccordingToPaciente(Map parametros) {
         log.debug("Request to get all Registros");
-        List<Registro> result = registroRepository.findAllAccordingToPaciente(paciente,new PageRequest(page, pagesize,new Sort(Sort.Direction.DESC, "fechahora")));
+        System.out.println(parametros);
+        ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("1999-01-01T10:15:30+01:00[Europe/Paris]"):(ZonedDateTime)parametros.get("fechahora");
+        List<Registro> result = registroRepository.findAllAccordingToPaciente((String)parametros.get("paciente"),
+        		dateTime,new PageRequest(0, Integer.parseInt((String)parametros.get("pagesize")),new Sort(Sort.Direction.DESC, "fechahora")));
         return result;
     }   
     

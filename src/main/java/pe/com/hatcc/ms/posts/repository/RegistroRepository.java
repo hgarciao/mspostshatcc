@@ -2,6 +2,7 @@ package pe.com.hatcc.ms.posts.repository;
 
 import pe.com.hatcc.ms.posts.domain.Registro;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -20,8 +21,8 @@ public interface RegistroRepository extends MongoRepository<Registro,String> {
 	public List<Registro> findAllByPaciente(String paciente);
 	
 	//@Query("{ paciente: { $ne: ?0 } }")
-	@Query("{}")
-	public List<Registro> findAllAccordingToPaciente(String paciente,Pageable pageable);
+	@Query("{ 'fechahora' :{ '$lt' : ?1 }}")
+	public List<Registro> findAllAccordingToPaciente(String paciente,ZonedDateTime fechaHora,Pageable pageable);
 	
 	
 	@Query(value="{ 'suscritos' : { '$all' : ['?0']}, 'comentarios':{$elemMatch: { 'paciente' : { $ne: '?0' }}} }",fields="{id:1,comentarios:1,pensamiento:1}")
