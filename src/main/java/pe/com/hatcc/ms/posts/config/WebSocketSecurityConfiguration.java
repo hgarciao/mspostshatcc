@@ -14,7 +14,7 @@ public class WebSocketSecurityConfiguration extends AbstractSecurityWebSocketMes
         messages
         .nullDestMatcher().authenticated()
         .simpTypeMatchers(SimpMessageType.DISCONNECT,SimpMessageType.UNSUBSCRIBE).permitAll()
-        .simpTypeMatchers(SimpMessageType.CONNECT,SimpMessageType.DISCONNECT).hasAnyRole("PACIENTE")
+        .simpTypeMatchers(SimpMessageType.CONNECT).hasAnyRole("PACIENTE")
         .simpSubscribeDestMatchers("/topic/registros").hasRole("PACIENTE")
         .anyMessage().denyAll();
         

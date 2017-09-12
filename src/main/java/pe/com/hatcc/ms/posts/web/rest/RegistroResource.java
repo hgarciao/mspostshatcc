@@ -76,6 +76,7 @@ public class RegistroResource {
 		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
 		registro.setFechahora(zonedDateTime);
 		registro.setFechahoraUpdate(zonedDateTime);
+		registro.setOpUpdate("crear");
         Registro result = registroService.save(registro);
         /*Mandar notificaciones a todos los usuarios*/
         this.messagingTemplate.convertAndSend("/topic/registros", result);
@@ -136,11 +137,12 @@ public class RegistroResource {
 		registro.setFechahoraUpdate(zonedDateTime);
         Registro result = null;
         switch (operacion) {
-		//Realiza comentario
+		//Eliminar comentario
         case 0:
-        	System.out.println(registro);
+        	registro.setOpUpdate("eliminar.comentario");
         	result = registroService.save(registro);
 			break;
+		//Realiza comentario
         case 1:	
 			Optional<Comentario> matchingObjects = registro.getComentarios().stream().filter(c -> c.getId()==null ).findFirst();
     		Comentario comentario = matchingObjects.get();
@@ -149,7 +151,14 @@ public class RegistroResource {
     		zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
     		comentario.setFechaHora(zonedDateTime);
     		comentario.setId((new ObjectId()).toString());
+    		registro.setOpUpdate("crear.comentario");
     		result = registroService.save(registro);
+			break;
+			//Realiza comentario
+        case 2:	
+        	registro.setOpUpdate("eliminar");
+        	registro.setEliminado(true);
+        	result = registroService.save(registro);
 			break;
 		}
         

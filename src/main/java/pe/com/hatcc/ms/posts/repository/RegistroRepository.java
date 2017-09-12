@@ -21,7 +21,7 @@ public interface RegistroRepository extends MongoRepository<Registro,String> {
 	public List<Registro> findAllByPaciente(String paciente);
 	
 	//@Query("{ paciente: { $ne: ?0 } }")
-	@Query("{ 'fechahora' :{ '$lt' : ?1 }}")
+	@Query("{ 'fechahora' :{ '$lt' : ?1 }, 'eliminado' : false }")
 	public List<Registro> findAllAccordingToPaciente(String paciente,ZonedDateTime fechaHora,Pageable pageable);
 	
 	

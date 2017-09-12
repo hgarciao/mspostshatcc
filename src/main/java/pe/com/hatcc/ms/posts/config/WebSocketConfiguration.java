@@ -53,7 +53,8 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 			public Message<?> preSend(Message<?> message, MessageChannel channel) {
 
 				StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-
+				
+				System.out.println("Este es el comando : " + accessor.getCommand());
 				if (!StompCommand.DISCONNECT.equals(accessor.getCommand())) {
 					
 					List<String> tokenList = accessor.getNativeHeader("Authorization");

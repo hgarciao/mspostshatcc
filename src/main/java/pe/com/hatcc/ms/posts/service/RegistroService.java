@@ -97,10 +97,10 @@ public class RegistroService {
     
     public List<Registro> findAllAccordingToPaciente(Map parametros) {
         log.debug("Request to get all Registros");
-        System.out.println(parametros);
-        ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("1999-01-01T10:15:30+01:00[Europe/Paris]"):(ZonedDateTime)parametros.get("fechahora");
+        //System.out.println(parametros);
+        ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("2500-01-01T10:15:30+01:00[Europe/Paris]"):ZonedDateTime.parse((String)parametros.get("fechahora"));
         List<Registro> result = registroRepository.findAllAccordingToPaciente((String)parametros.get("paciente"),
-        		dateTime,new PageRequest(0, Integer.parseInt((String)parametros.get("pagesize")),new Sort(Sort.Direction.DESC, "fechahora")));
+        		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));
         return result;
     }   
     
@@ -112,9 +112,6 @@ public class RegistroService {
      */
     
     public List<Registro> findAllAccordingToPacienteSuscrito(String paciente) {
-        /*log.debug("Request to get all Registros");
-        List<Registro> result = registroRepository.findAllAccordingToPacienteSuscrito(paciente,new Sort(Sort.Direction.DESC, "fechahoraUpdate"));
-        System.out.println("template : " + mongoTemplate);*/
     	List suscrito =  new ArrayList<String>();
     	suscrito.add(paciente);
     	List<AggregationOperation> list = new ArrayList<AggregationOperation>();
