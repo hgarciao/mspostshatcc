@@ -116,6 +116,7 @@ public class RegistroService {
     	suscrito.add(paciente);
     	List<AggregationOperation> list = new ArrayList<AggregationOperation>();
     	 	list.add(Aggregation.match(Criteria.where("suscritos").all(suscrito)));
+    	 	//list.add(Aggregation.match(Criteria.where("eliminado").not()));
     	    list.add(Aggregation.unwind("comentarios"));
     	    list.add(Aggregation.match(Criteria.where("comentarios.paciente").ne(paciente)));
     	    list.add(Aggregation.sort(new Sort(Sort.Direction.DESC,"comentarios.paciente")));
@@ -143,6 +144,13 @@ public class RegistroService {
     public Registro findOne(String id) {
         log.debug("Request to get Registro : {}", id);
         Registro registro = registroRepository.findOne(id);
+        return registro;
+    }
+    
+  
+    public Registro findOneByPaciente(String id, String username) {
+        log.debug("Request to get Registro : {}", id);
+        Registro registro = registroRepository.findOneByPaciente(id, username);
         return registro;
     }
 
