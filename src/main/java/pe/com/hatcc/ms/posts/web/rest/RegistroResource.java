@@ -167,6 +167,12 @@ public class RegistroResource {
 	    	registro.setOculto(true);
 	    	result = registroService.save(registro);
 			break;
+		//Des-Ocultar registro
+	    case 4:	
+	    	registro.setOpUpdate("mostrar");
+	    	registro.setOculto(false);
+	    	result = registroService.save(registro);
+			break;
 		}
         
         /*Mandar notificaciones a todos los usuarios suscritos
@@ -211,6 +217,10 @@ public class RegistroResource {
         return registroService.findAllByPaciente(username);
     }
     
+    
+    
+    //WS PARA EL WALL
+    
     /**
      * GET  /registros : get all the registros.
      *
@@ -224,6 +234,9 @@ public class RegistroResource {
         log.debug("REST request to get all Registros");
         return registroService.findAllAccordingToPaciente(parametros);
     }
+    
+    
+    //WS PARA LAS NOTIFICACIONES
     
     /**
      * GET  /registros : get all the registros.
