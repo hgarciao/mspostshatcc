@@ -52,7 +52,12 @@ public class Registro implements Serializable {
     
     @Field("fechahoraUpdate")
     private ZonedDateTime fechahoraUpdate;
-
+    
+    @Field("opUpdate")
+    private String opUpdate;
+    
+    @Field("pacienteUpdate")
+    private String pacienteUpdate;
     
     public String getId() {
         return id;
@@ -188,7 +193,24 @@ public class Registro implements Serializable {
 	public void setFechahoraUpdate(ZonedDateTime fechahoraUpdate) {
 		this.fechahoraUpdate = fechahoraUpdate;
 	}
+
+	public String getPacienteUpdate() {
+		return pacienteUpdate;
+	}
+
+	public void setPacienteUpdate(String pacienteUpdate) {
+		this.pacienteUpdate = pacienteUpdate;
+	}
+
+	public String getOpUpdate() {
+		return opUpdate;
+	}
+
+	public void setOpUpdate(String opUpdate) {
+		this.opUpdate = opUpdate;
+	}
     
     
+	
     
 }

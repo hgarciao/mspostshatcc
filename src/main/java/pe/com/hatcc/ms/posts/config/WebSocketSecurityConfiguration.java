@@ -12,9 +12,9 @@ public class WebSocketSecurityConfiguration extends AbstractSecurityWebSocketMes
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
-        .nullDestMatcher().authenticated()
-        .simpTypeMatchers(SimpMessageType.DISCONNECT,SimpMessageType.UNSUBSCRIBE).permitAll()
-        .simpTypeMatchers(SimpMessageType.CONNECT,SimpMessageType.DISCONNECT).hasAnyRole("PACIENTE")
+        //.nullDestMatcher().authenticated()
+        .simpTypeMatchers(SimpMessageType.DISCONNECT,SimpMessageType.UNSUBSCRIBE).anonymous()
+        .simpTypeMatchers(SimpMessageType.CONNECT).hasAnyRole("PACIENTE")
         .simpSubscribeDestMatchers("/topic/registros").hasRole("PACIENTE")
         .anyMessage().denyAll();
         
