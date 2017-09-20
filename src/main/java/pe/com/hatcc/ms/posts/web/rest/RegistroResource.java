@@ -154,11 +154,24 @@ public class RegistroResource {
     		registro.setOpUpdate("crear.comentario");
     		result = registroService.save(registro);
 			break;
-			//Realiza comentario
+		//Eliminar registro
         case 2:	
         	registro.setOpUpdate("eliminar");
         	registro.setEliminado(true);
         	result = registroService.save(registro);
+			break;
+		
+        //Ocultar registro
+	    case 3:	
+	    	registro.setOpUpdate("ocultar");
+	    	registro.setOculto(true);
+	    	result = registroService.save(registro);
+			break;
+		//Des-Ocultar registro
+	    case 4:	
+	    	registro.setOpUpdate("mostrar");
+	    	registro.setOculto(false);
+	    	result = registroService.save(registro);
 			break;
 		}
         
@@ -204,6 +217,10 @@ public class RegistroResource {
         return registroService.findAllByPaciente(username);
     }
     
+    
+    
+    //WS PARA EL WALL
+    
     /**
      * GET  /registros : get all the registros.
      *
@@ -217,6 +234,9 @@ public class RegistroResource {
         log.debug("REST request to get all Registros");
         return registroService.findAllAccordingToPaciente(parametros);
     }
+    
+    
+    //WS PARA LAS NOTIFICACIONES
     
     /**
      * GET  /registros : get all the registros.
@@ -233,27 +253,30 @@ public class RegistroResource {
     }
     
     
-    /**/
+    
     /**
      * GET  /registros/:id : get the "id" registro.
      *
      * @param id the id of the registro to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the registro, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/registros/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Registro> getRegistro(@PathVariable String id) {
-        log.debug("REST request to get Registro : {}", id);
-        Registro registro = registroService.findOne(id);
-        return Optional.ofNullable(registro)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
+    
+    @RequestMapping(value = "/registros/{username}/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+        @Timed
+        public ResponseEntity<Registro> getRegistroByPaciente(@PathVariable String username, @PathVariable String id) {
+            log.debug("REST request to get Registro : {}", id);
+            Registro registro = registroService.findOneByPaciente(id, username);
+            return Optional.ofNullable(registro)
+                .map(result -> new ResponseEntity<>(
+                    result,
+                    HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
+    
+    
+    
     /**
      * DELETE  /registros/:id : delete the "id" registro.
      *

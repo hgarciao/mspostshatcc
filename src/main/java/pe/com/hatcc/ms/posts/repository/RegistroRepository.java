@@ -20,10 +20,14 @@ public interface RegistroRepository extends MongoRepository<Registro,String> {
 	@Query("{ 'paciente' : ?0 }")
 	public List<Registro> findAllByPaciente(String paciente);
 	
-	//@Query("{ paciente: { $ne: ?0 } }")
-	@Query("{ 'fechahora' :{ '$lt' : ?1 }, 'eliminado' : false }")
+	@Query("{'$or':[ { 'fechahora' :{ '$lt' : ?1 }, 'eliminado' : false , 'oculto': false}, { 'fechahora' :{ '$lt' : ?1 }, 'eliminado' : false , 'oculto': true , 'paciente': '?0'} ] }")
 	public List<Registro> findAllAccordingToPaciente(String paciente,ZonedDateTime fechaHora,Pageable pageable);
 	
+	@Query("{ 'fechahora' :{ '$lt' : ?1 }, 'eliminado' : false , 'oculto': false , 'paciente':'?0' }")
+	public List<Registro> findAllAccordingToPacienteByPaciente(String pacienteFiltro,ZonedDateTime fechaHora,Pageable pageable);
+	
+	@Query("{'$or':[ {'id':'?0','eliminado' : false , 'oculto': false }, {'id':'?0','eliminado' : false , 'oculto': true, paciente:'?1'} ] }")
+	public Registro findOneByPaciente(String id, String username);
 	
 	@Query(value="{ 'suscritos' : { '$all' : ['?0']}, 'comentarios':{$elemMatch: { 'paciente' : { $ne: '?0' }}} }",fields="{id:1,comentarios:1,pensamiento:1}")
 	public List<Registro> findAllAccordingToPacienteSuscrito(String paciente,Sort sort);

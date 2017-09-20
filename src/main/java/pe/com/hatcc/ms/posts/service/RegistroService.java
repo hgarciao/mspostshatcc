@@ -97,12 +97,21 @@ public class RegistroService {
     
     public List<Registro> findAllAccordingToPaciente(Map parametros) {
         log.debug("Request to get all Registros");
-        //System.out.println(parametros);
-        ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("2500-01-01T10:15:30+01:00[Europe/Paris]"):ZonedDateTime.parse((String)parametros.get("fechahora"));
-        List<Registro> result = registroRepository.findAllAccordingToPaciente((String)parametros.get("paciente"),
-        		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));
+        List<Registro> result;
+        if(parametros.get("pacientefiltro")==null){
+        	 ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("2500-01-01T10:15:30+01:00[Europe/Paris]"):ZonedDateTime.parse((String)parametros.get("fechahora"));
+             result = registroRepository.findAllAccordingToPaciente((String)parametros.get("paciente"),
+             		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));
+        }else{
+        	ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("2500-01-01T10:15:30+01:00[Europe/Paris]"):ZonedDateTime.parse((String)parametros.get("fechahora"));
+            result = registroRepository.findAllAccordingToPacienteByPaciente((String)parametros.get("pacientefiltro"),
+            		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));	
+        }
+       
+        
         return result;
     }   
+    
     
     
     /**
@@ -116,6 +125,9 @@ public class RegistroService {
     	suscrito.add(paciente);
     	List<AggregationOperation> list = new ArrayList<AggregationOperation>();
     	 	list.add(Aggregation.match(Criteria.where("suscritos").all(suscrito)));
+    	 	Criteria criteria = new Criteria();
+    	 	list.add(Aggregation.match(criteria.orOperator(Criteria.where("eliminado").is(false).andOperator(Criteria.where("oculto").is(false))
+    	 			,Criteria.where("eliminado").is(false).andOperator(Criteria.where("oculto").is(true).andOperator(Criteria.where("paciente").is(paciente))))));    	 	
     	    list.add(Aggregation.unwind("comentarios"));
     	    list.add(Aggregation.match(Criteria.where("comentarios.paciente").ne(paciente)));
     	    list.add(Aggregation.sort(new Sort(Sort.Direction.DESC,"comentarios.paciente")));
@@ -143,6 +155,13 @@ public class RegistroService {
     public Registro findOne(String id) {
         log.debug("Request to get Registro : {}", id);
         Registro registro = registroRepository.findOne(id);
+        return registro;
+    }
+    
+  
+    public Registro findOneByPaciente(String id, String username) {
+        log.debug("Request to get Registro : {}", id);
+        Registro registro = registroRepository.findOneByPaciente(id, username);
         return registro;
     }
 
