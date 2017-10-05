@@ -37,6 +37,9 @@ public class Variable implements Serializable {
 
 	@Field("opciones")
 	private List<Opcion> opciones;
+	
+	@Field("tipo")
+	private String tipo;
 
 	public String getId() {
 		return id;
@@ -109,6 +112,14 @@ public class Variable implements Serializable {
 		this.flagMultivalor = flagMultivalor;
 	}
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -123,6 +134,8 @@ public class Variable implements Serializable {
 		}
 		return Objects.equals(id, variable.id);
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

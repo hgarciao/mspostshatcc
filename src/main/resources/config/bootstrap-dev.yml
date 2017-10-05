@@ -10,7 +10,7 @@ spring:
                 initial-interval: 1000
                 max-interval: 2000
                 max-attempts: 100
-            uri: http://admin:h1o2g3o4o5o6789@144.217.80.5:8761/config
+            uri: http://admin:h1o2g3o4o5o6789@127.0.0.1:8761/config
             # name of the config server's property source (file.yml) that we want to use
             name: msposts
             profile: dev # profile(s) of the property source

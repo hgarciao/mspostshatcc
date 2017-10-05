@@ -26,7 +26,7 @@ public class Registro implements Serializable {
 
     @Field("pensamiento")
     private String pensamiento;
-
+    
     @Field("post")
     private String post;
 
@@ -58,6 +58,9 @@ public class Registro implements Serializable {
     
     @Field("pacienteUpdate")
     private String pacienteUpdate;
+    
+    @Field("bpensamiento")
+    private String bpensamiento;
     
     public String getId() {
         return id;
@@ -120,6 +123,14 @@ public class Registro implements Serializable {
 
 	public void setCampos(List<Campo> campos) {
 		this.campos = campos;
+	}
+
+	public String getBpensamiento() {
+		return bpensamiento;
+	}
+
+	public void setBpensamiento(String bpensamiento) {
+		this.bpensamiento = bpensamiento;
 	}
 
 	@Override
