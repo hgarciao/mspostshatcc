@@ -23,6 +23,8 @@ public class Opcion implements Serializable {
     
     private String idUsuario;
     
+    private String tipo;
+    
     
     public String getId() {
 		return id;
@@ -64,6 +66,14 @@ public class Opcion implements Serializable {
 
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	/* @Override
