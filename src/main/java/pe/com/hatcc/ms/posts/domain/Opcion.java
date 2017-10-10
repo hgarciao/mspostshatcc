@@ -21,8 +21,7 @@ public class Opcion implements Serializable {
 
     private String descripcion;
     
-    private String idUsuario;
-    
+    private String idUsuario;    
     
     public String getId() {
 		return id;
