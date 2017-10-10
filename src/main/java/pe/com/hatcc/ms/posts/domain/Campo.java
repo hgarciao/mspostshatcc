@@ -3,6 +3,8 @@ package pe.com.hatcc.ms.posts.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 /**
  * A Variable.
  */
@@ -14,6 +16,10 @@ public class Campo implements Serializable {
 	private String nombreRegistroVariable;
 
 	private List<Opcion> opciones;
+	
+	private String tipo;
+	
+	private String nombrePost;
 
 	
 	public String getNombreRegistroVariable() {
@@ -30,6 +36,22 @@ public class Campo implements Serializable {
 
 	public void setOpciones(List<Opcion> opciones) {
 		this.opciones = opciones;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getNombrePost() {
+		return nombrePost;
+	}
+
+	public void setNombrePost(String nombrePost) {
+		this.nombrePost = nombrePost;
 	}
 	
 	/*

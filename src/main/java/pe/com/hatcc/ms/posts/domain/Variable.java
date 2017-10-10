@@ -40,6 +40,9 @@ public class Variable implements Serializable {
 	
 	@Field("tipo")
 	private String tipo;
+	
+	@Field("nombrePost")
+	private String nombrePost;
 
 	public String getId() {
 		return id;
@@ -118,6 +121,14 @@ public class Variable implements Serializable {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getNombrePost() {
+		return nombrePost;
+	}
+
+	public void setNombrePost(String nombrePost) {
+		this.nombrePost = nombrePost;
 	}
 
 	@Override
