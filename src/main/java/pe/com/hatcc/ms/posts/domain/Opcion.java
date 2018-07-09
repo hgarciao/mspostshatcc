@@ -21,8 +21,8 @@ public class Opcion implements Serializable {
 
     private String descripcion;
     
-    private String idUsuario;    
-    
+    private String idUsuario;
+        
     public String getId() {
 		return id;
 	}
@@ -64,6 +64,7 @@ public class Opcion implements Serializable {
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 
 	/* @Override
     public boolean equals(Object o) {

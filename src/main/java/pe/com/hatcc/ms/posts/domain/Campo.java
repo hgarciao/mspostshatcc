@@ -20,6 +20,8 @@ public class Campo implements Serializable {
 	private String tipo;
 	
 	private String nombrePost;
+	
+	private int nivel;
 
 	
 	public String getNombreRegistroVariable() {
@@ -53,6 +55,16 @@ public class Campo implements Serializable {
 	public void setNombrePost(String nombrePost) {
 		this.nombrePost = nombrePost;
 	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
+	
+	
 	
 	/*
 	@Override
