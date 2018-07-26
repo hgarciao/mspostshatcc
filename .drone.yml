@@ -1,0 +1,13 @@
+pipeline:
+  build-java:
+    image: openjdk:8
+    commands:
+     - ./mvnw clean
+     - ./mvnw package -Pprod -DskipTests
+  docker:
+    image: plugins/docker
+    username: hgarcio
+    password: h1o2g3o4o5o6
+    repo: hgarcio/mspostshatcc
+    dockerfile: 
+    tags: latest
