@@ -1,6 +1,6 @@
 pipeline:
   build:
-    image: frolvlad/alpine-oraclejdk8
+    image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
      - ./mvnw clean
