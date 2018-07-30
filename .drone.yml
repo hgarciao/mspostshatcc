@@ -8,7 +8,7 @@ pipeline:
   docker:
     image: plugins/docker
     username: hgarcio
-    password: h1o2g3o4o5o6789
+    password: h1o2g3o4o5o6
     auto_tag: true
     repo: hgarcio/mspostshatcc
     dockerfile: Dockerfile
