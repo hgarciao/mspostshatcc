@@ -3,9 +3,6 @@ pipeline:
     image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
-     - apt-get -y update  
-     - apt-get install -y iputils-ping
-     - ping 144.217.80.5
      #- ./mvnw clean
      #- ./mvnw package -Dspring.profiles.active=drone
      - telnet 144.217.80.5 8761
