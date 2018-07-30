@@ -5,3 +5,4 @@ pipeline:
      - chmod +x mvnw
      - ./mvnw clean
      - ./mvnw package -Dspring.profiles.active=drone
+     - ls
