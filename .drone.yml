@@ -4,5 +4,4 @@ pipeline:
     commands:
      - chmod +x mvnw
      - ./mvnw clean
-     - ./mvnw package -Dspring.profiles.active=drone
-     - ls
+     - ./mvnw package -Pprod -DskipTests
