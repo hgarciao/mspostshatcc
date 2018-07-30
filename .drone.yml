@@ -1,14 +1,14 @@
 pipeline:
-  jhipster-registry:
-    image: jhipster/jhipster-registry:v3.0.3
-    detach: true
-    volumes:
-        - /home/ubuntu/drone/container-volumes/central-server-config:/central-server-config
-    environment:
-        - SPRING_SECURITY_USER_PASSWORD:hgarcia
   build:
     image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
      - ./mvnw clean
      - ./mvnw package -Dspring.profiles.active=drone
+services:
+  jhipster-registry:
+    image: jhipster/jhipster-registry:v3.0.3
+    volumes:
+        - /home/ubuntu/drone/container-volumes/central-server-config:/central-config
+    environment:
+        - SPRING_SECURITY_USER_PASSWORD:hgarcia
