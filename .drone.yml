@@ -10,5 +10,3 @@ services:
     image: jhipster/jhipster-registry:v3.0.3
     volumes:
         - /home/ubuntu/drone/container-volumes/central-server-config:/central-config
-    environment:
-        - SPRING_SECURITY_USER_PASSWORD:hgarcia
