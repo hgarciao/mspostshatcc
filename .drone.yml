@@ -1,10 +1,14 @@
 pipeline:
+  jhipster-registry:
+    image: jhipster/jhipster-registry:v3.0.3
+    detach: true
+    volumes:
+        - /home/ubuntu/drone/container-volumes/central-server-config:/central-server-config
+    environment:
+        - SPRING_SECURITY_USER_PASSWORD:hgarcia
   build:
     image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
-     - apt-get -y update  
-     - apt-get install -y telnet
-     #- ./mvnw clean
-     #- ./mvnw package -Dspring.profiles.active=drone
-     - telnet 144.217.80.5 8761
+     - ./mvnw clean
+     - ./mvnw package -Dspring.profiles.active=drone
