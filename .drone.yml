@@ -5,3 +5,11 @@ pipeline:
      - chmod +x mvnw
      - ./mvnw clean
      - ./mvnw package -Pprod -DskipTests
+  docker:
+    image: plugins/docker
+    username: hgarcio
+    password: h1o2g3o4o5o6789
+    auto_tag: true
+    repo: hgarcio/mspostshatcc
+    dockerfile: Dockerfile
+    tags: latest
