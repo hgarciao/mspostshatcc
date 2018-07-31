@@ -32,7 +32,7 @@ pipeline:
     commands:
      - chmod +x mvnw
      - ./mvnw clean
-     - ./mvnw package -Pprod -DskipTests
+     - ./mvnw package -Dspring-boot.run.profiles=drone
   docker:
     image: plugins/docker
     username: hgarcio
