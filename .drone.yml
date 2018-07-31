@@ -10,11 +10,13 @@ pipeline:
     commands:
       - apk update && apk add --no-cache openssh sshpass
       - cd /workspace
+      - rm -rf /workspace/*
       - export SSHPASS=Cj57AQCn
       - sshpass -e scp -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca:/home/ubuntu/mongo.tar.gz mongo.tar.gz 
       - tar -xzvf mongo.tar.gz
-      - mv mongo mongo-v
+      - mv /home/ubuntu/ambientes/dev/data/mongo mongo-v
       - mv mongo-v/* .
+      - rm -rf home
       - ls
       - sshpass -e ssh -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca 'rm -rf /home/ubuntu/mongo.tar.gz'
     volumes:
