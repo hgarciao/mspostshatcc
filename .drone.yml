@@ -15,7 +15,7 @@ pipeline:
       - sshpass -e scp -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca:/home/ubuntu/mongo.tar.gz mongo.tar.gz 
       - tar -xzvf mongo.tar.gz
       - ls
-      - mv /home/ubuntu/ambientes/dev/data/mongo mongo-v
+      - mv home/ubuntu/ambientes/dev/data/mongo mongo-v
       - mv mongo-v/* .
       - rm -rf home
       - ls
