@@ -1,4 +1,24 @@
 pipeline:
+  backup-mongo-data:
+    image: alpine
+    commands:
+      - apk update && apk add --no-cache openssh sshpass
+      - export SSHPASS=Cj57AQCn
+      - sshpass -e ssh -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca 'tar -czvf /home/ubuntu/mongo.tar.gz /home/ubuntu/ambientes/dev/data/mongo'
+  copying-mongo-data:
+    image: alpine
+    commands:
+      - apk update && apk add --no-cache openssh sshpass
+      - cd /workspace
+      - export SSHPASS=Cj57AQCn
+      - sshpass -e scp -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca:/home/ubuntu/mongo.tar.gz mongo.tar.gz 
+      - tar -xzvf mongo.tar.gz
+      - mv mongo mongo-v
+      - mv mongo-v/* .
+      - ls
+      - sshpass -e ssh -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca 'rm -rf /home/ubuntu/mongo.tar.gz'
+    volumes:
+      - workspace-drone-mongo:/workspace
   build:
     image: hgarcio/ubuntu-node-java
     commands:
