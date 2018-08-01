@@ -33,7 +33,7 @@ pipeline:
      - chmod +x mvnw
      - ./mvnw clean install
      - ./mvnw package
-     - ls
+     - ./mvnw package -Dspring.profiles.active=test
   docker:
     image: plugins/docker
     username: hgarcio
