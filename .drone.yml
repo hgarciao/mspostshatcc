@@ -7,9 +7,7 @@ pipeline:
      - ./mvnw package -Pprod -DskipTests
   docker:
     image: plugins/docker
-    username: hgarcio
-    password: h1o2g3o4o5o6
     auto_tag: true
     repo: hgarcio/mspostshatcc
     dockerfile: Dockerfile
-    tags: latest
+    secrets: [ docker_username, docker_password ]
