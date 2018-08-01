@@ -31,8 +31,10 @@ pipeline:
     image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
-     - ./mvnw clean
-     - ./mvnw package -Dspring-boot.run.profiles=drone
+     - ./mvnw clean install
+     - ./mvnw test -Dspring.profiles.active=drone
+     - ./mvnw package -Pprod -DskipTests
+  docker:
   docker:
     image: plugins/docker
     username: hgarcio
