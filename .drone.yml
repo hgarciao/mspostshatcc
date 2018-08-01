@@ -23,7 +23,7 @@ pipeline:
     volumes:
       - workspace-drone-mongo:/workspace
   mongo:
-   image: mongo:3.4
+   image: mongo
    volumes:
       - workspace-drone-mongo:/data/db
    detach: true
