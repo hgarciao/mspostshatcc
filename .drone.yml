@@ -23,7 +23,7 @@ pipeline:
     volumes:
       - workspace-drone-mongo:/workspace
   mongo:
-   image: mongo
+   image: mongo:3.4
    volumes:
       - workspace-drone-mongo:/data/db
    detach: true
@@ -34,7 +34,6 @@ pipeline:
      - ./mvnw clean install
      - ./mvnw test -Dspring.profiles.active=drone
      - ./mvnw package -Pprod -DskipTests
-  docker:
   docker:
     image: plugins/docker
     username: hgarcio
