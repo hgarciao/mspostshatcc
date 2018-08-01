@@ -32,8 +32,7 @@ pipeline:
     commands:
      - chmod +x mvnw
      - ./mvnw clean install
-     - ./mvnw test -Dspring.profiles.active=drone
-     - ./mvnw package -Pprod -DskipTests
+     - ./mvnw package
   docker:
     image: plugins/docker
     username: hgarcio
