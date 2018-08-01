@@ -32,7 +32,6 @@ pipeline:
     commands:
      - chmod +x mvnw
      - ./mvnw clean install
-     - ./mvnw package
      - ./mvnw package -Dspring.profiles.active=test
   docker:
     image: plugins/docker
