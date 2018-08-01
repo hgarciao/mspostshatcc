@@ -22,17 +22,11 @@ pipeline:
       - sshpass -e ssh -o StrictHostKeyChecking=no root@vps135621.vps.ovh.ca 'rm -rf /home/ubuntu/mongo.tar.gz'
     volumes:
       - workspace-drone-mongo:/workspace
-  mongo:
-   image: mongo:3.4
-   volumes:
-      - workspace-drone-mongo:/data/db
-   detach: true
   build:
     image: hgarcio/ubuntu-node-java
     commands:
      - chmod +x mvnw
-     - ./mvnw clean install
-     - ./mvnw test -Dspring.profiles.active=drone
+     - ./mvnw clean
      - ./mvnw package -Pprod -DskipTests
   docker:
     image: plugins/docker
