@@ -33,6 +33,7 @@ pipeline:
      - chmod +x mvnw
      - ./mvnw clean install
      - ./mvnw package
+     - ls
   docker:
     image: plugins/docker
     username: hgarcio
