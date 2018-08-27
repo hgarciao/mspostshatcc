@@ -236,6 +236,22 @@ public class RegistroResource {
     }
     
     
+    //WS PARA EL WALL
+    
+    /**
+     * GET  /registros/paciente : get all the registros of one pacient with pagination.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of registros in body
+     */
+    @RequestMapping(value = "/registros/paciente",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Registro> getAllByPacienteFilterPagination(@RequestBody Map<String, Object> parametros) {
+        log.debug("REST request to get all Registros");
+        return registroService.findAllByPacienteFilterPagination(parametros);
+    }    
+    
     //WS PARA LAS NOTIFICACIONES
     
     /**

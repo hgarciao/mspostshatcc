@@ -18,12 +18,16 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.autoscaling.model.Filter;
 import com.mongodb.Mongo;
 import com.mongodb.operation.DistinctOperation;
 
 import javax.inject.Inject;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -105,12 +109,86 @@ public class RegistroService {
         }else{
         	ZonedDateTime dateTime = parametros.get("fechahora")==null?ZonedDateTime.parse("2500-01-01T10:15:30+01:00[Europe/Paris]"):ZonedDateTime.parse((String)parametros.get("fechahora"));
             result = registroRepository.findAllAccordingToPacienteByPaciente((String)parametros.get("pacientefiltro"),
-            		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));	
+            		dateTime,new PageRequest(0, (int)parametros.get("pagesize"),new Sort(Sort.Direction.DESC, "fechahora")));
         }
        
         
         return result;
-    }   
+    }  
+    
+    
+    /**
+     *  Get all the registros of one pacient for his own registries page (only visible for him).
+     *  
+     *  @return the list of entities
+     *  Paciente - obligatorio
+     *  parametros.get("pacient");
+     *  Tamaño de pagina - obligatorio
+     *  parametros.get("pagesize");
+     *  Filtro Texto - Default vacio 
+     *  parametros.get("filter");
+     *  Ordenar por - Default fecha-hora
+     *  parametros.get("orderby");
+     *  Numero de pagina - Default pagina 1
+     *  parametros.get("pagenumber");
+     */
+    
+    public List<Registro> findAllByPacienteFilterPagination(Map parametros) {
+        log.debug("Request to get all Registros");
+        List<Registro> result =  new ArrayList<Registro>();
+        
+        
+        if ( parametros.get("pacient")==null | parametros.get("pagesize")==null ) {
+        	//Retorna vacio porque esos campos son mandatorios
+        	return result;
+        }else {
+        	 String pacient = (String) parametros.get("pacient");
+        	 int pagesize = ((Integer)parametros.get("pagesize")).intValue();
+        	 String orderby = parametros.get("orderby")==null | ((String)parametros.get("orderby")).isEmpty() ?"fechahora": (String)parametros.get("orderby");
+        	 String pagenumber = parametros.get("pagenumber")==null | ((String)parametros.get("pagenumber")).isEmpty() ?"1": (String)parametros.get("pagenumber");
+        	
+        	 String filter  = parametros.get("filter")==null ? "": (String)parametros.get("filter");
+        	 String date = parametros.get("date")==null? "": (String)parametros.get("date");
+        	 
+        	 
+        	 if(!date.isEmpty() && !filter.isEmpty()) {
+        		 System.out.println("Ambos filtros");
+        		 ZonedDateTime dateTimeBottom = ZonedDateTime.parse(date);
+        		 ZonedDateTime dateTimeTop = dateTimeBottom.plus(1,ChronoUnit.DAYS);
+        		 result = registroRepository.findAllByPacienteFilterPagination(
+        				 pacient,
+        				 filter,
+        				 dateTimeTop,
+        				 dateTimeBottom,
+        				 new PageRequest(Integer.parseInt(pagenumber)-1, //numero de pagina
+        						 		pagesize, // tamaño de pagina
+        						 		new Sort(Sort.Direction.DESC, orderby))); // order by
+        	 }else{
+        		 if(date.isEmpty()){
+        			 System.out.println("Filtro Normal");
+        			 result = registroRepository.findAllByPacienteFilterPagination(
+            				 pacient,
+            				 filter,
+            				 new PageRequest(Integer.parseInt(pagenumber)-1, //numero de pagina
+            						 		pagesize, // tamaño de pagina
+            						 		new Sort(Sort.Direction.DESC, orderby))); // order by 
+        		 }else 
+        		 if(filter.isEmpty()) {
+        			 System.out.println("Filtro Fecha");
+        			 ZonedDateTime dateTimeBottom = ZonedDateTime.parse(date);
+            		 ZonedDateTime dateTimeTop = dateTimeBottom.plus(1,ChronoUnit.DAYS);
+            		 result = registroRepository.findAllByPacienteFilterPagination(
+            				 pacient,
+            				 dateTimeTop,
+            				 dateTimeBottom,
+            				 new PageRequest(Integer.parseInt(pagenumber)-1, //numero de pagina
+            						 		pagesize, // tamaño de pagina
+            						 		new Sort(Sort.Direction.DESC, orderby))); // order by
+        		 }
+        	 }	
+        	return result;
+        } 
+    } 
     
     
     
@@ -174,8 +252,6 @@ public class RegistroService {
         log.debug("Request to delete Registro : {}", id);
         registroRepository.delete(id);
     }
-    
-    
     
     
     

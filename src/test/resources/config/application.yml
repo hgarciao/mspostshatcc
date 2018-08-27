@@ -24,9 +24,7 @@ spring:
         serialization.write_dates_as_timestamps: false
     data:
         mongodb:
-            host: localhost
-            port: 27117
-            database: msPostsHatcc
+            uri: mongodb://hatcc:hatcc@mongo:27017/msPostsHatcc
     mail:
         host: localhost
     mvc:
@@ -34,6 +32,7 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    profile: test
 
 liquibase:
     contexts: test

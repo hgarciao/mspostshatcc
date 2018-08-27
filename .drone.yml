@@ -1,0 +1,14 @@
+pipeline:
+  build:
+    image: hgarcio/ubuntu-node-java
+    commands:
+     - chmod +x mvnw
+     - ./mvnw clean
+     - ./mvnw package -Pprod -DskipTests
+     - ls
+  docker:
+    image: plugins/docker
+    auto_tag: true
+    repo: hgarcio/mspostshatcc
+    dockerfile: Dockerfile
+    secrets: [ docker_username, docker_password ]
