@@ -1,5 +1,6 @@
 package pe.com.hatcc.ms.posts.service;
 
+
 import pe.com.hatcc.ms.posts.domain.Comentario;
 import pe.com.hatcc.ms.posts.domain.Registro;
 import pe.com.hatcc.ms.posts.repository.RegistroRepository;

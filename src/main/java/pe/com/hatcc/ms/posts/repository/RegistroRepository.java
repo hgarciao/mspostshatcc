@@ -32,16 +32,16 @@ public interface RegistroRepository extends MongoRepository<Registro,String> {
 	@Query(value="{ 'suscritos' : { '$all' : ['?0']}, 'comentarios':{$elemMatch: { 'paciente' : { $ne: '?0' }}} }",fields="{id:1,comentarios:1,pensamiento:1}")
 	public List<Registro> findAllAccordingToPacienteSuscrito(String paciente,Sort sort);
 	
-	@Query("{'$or':[ { 'paciente' : '?0',  'campos': { $elemMatch: { 'opciones': { $elemMatch: { 'valor': {$regex : ?1, $options: 'i'} } } } } }, "
-			+ "{ 'paciente' : ?0,  'pensamiento': {$regex : ?1, $options: 'i'} } ] }")
+	@Query("{'$or':[ { 'paciente' : '?0',  'campos': { $elemMatch: { 'opciones': { $elemMatch: { 'valor': {$regex : ?1, $options: 'i'} } } } },'eliminado' : false , 'oculto': false }, "
+			+ "{ 'paciente' : ?0,  'pensamiento': {$regex : ?1, $options: 'i'},'eliminado' : false , 'oculto': false } ] }")
 	public List<Registro> findAllByPacienteFilterPagination(String paciente,String Filter,Pageable pageable);
 	
-	@Query("{'$and':[ {'paciente':'?0','fechahora' :{ $gte : ?2} }, {'paciente':'?0','fechahora' :{ $lte : ?1} } ] }")
+	@Query("{'$and':[ {'paciente':'?0','fechahora' :{ $gte : ?2} ,'eliminado' : false , 'oculto': false }, {'paciente':'?0','fechahora' :{ $lte : ?1} ,'eliminado' : false , 'oculto': false} ] }")
 	public List<Registro> findAllByPacienteFilterPagination(String paciente,ZonedDateTime FilterTop,ZonedDateTime FilterBottom,Pageable pageable);
 	
 	@Query("{'$and':[ {'$and':[ {'paciente':'?0','fechahora' :{ $gte : ?3} }, {'paciente':'?0','fechahora' :{ $lte : ?2} } ] }, "
-			+ "{'$or':[ { 'paciente' : '?0',  'campos': { $elemMatch: { 'opciones': { $elemMatch: { 'valor': {$regex : ?1, $options: 'i'} } } } } }," + 
-			"{ 'paciente' : ?0,  'pensamiento': {$regex : ?1, $options: 'i'} } ] }]}")
+			+ "{'$or':[ { 'paciente' : '?0',  'campos': { $elemMatch: { 'opciones': { $elemMatch: { 'valor': {$regex : ?1, $options: 'i'} } } } }, 'eliminado' : false , 'oculto': false}," + 
+			"{ 'paciente' : ?0,  'pensamiento': {$regex : ?1, $options: 'i'},'eliminado' : false , 'oculto': false } ] }]}")
 	public List<Registro> findAllByPacienteFilterPagination(String paciente,String filter,ZonedDateTime FilterTop,ZonedDateTime FilterBottom,Pageable pageable);
 	
 }
